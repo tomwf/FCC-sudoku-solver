@@ -31,7 +31,7 @@ module.exports = function (app) {
       // Check for invalid coordinate
       if (/(^[^A-I][^1-9]$)||(^[A-I][^1-9]$)||(^[^A-I][1-9]$)/.test(coordinate)) return res.json({ error: 'Invalid coordinate'})
 
-      const message = { valid: true }
+      const message = { valid: false }
       const conflict = []
       const invalidRow = solver.checkRowPlacement(puzzle, row, column, value)
       const invalidCol = solver.checkColPlacement(puzzle, row, column, value)
@@ -41,7 +41,11 @@ module.exports = function (app) {
       if (invalidRow) conflict.push(invalidRow)
       if (invalidCol) conflict.push(invalidCol)
       if (invalidRegion) conflict.push(invalidRegion)
-      if (conflict.length > 0) message['conflict'] = conflict
+      if (conflict.length > 0) {
+        message['conflict'] = conflict
+      } else {
+        message.valid = true
+      }
 
       res.json(message)
     });
