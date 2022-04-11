@@ -29,11 +29,7 @@ module.exports = function (app) {
       if (/[^1-9]/.test(value)) return res.json({ error: 'Invalid value' })
 
       // Check for invalid coordinate
-      if (
-        row.charCodeAt() < 65 || row.charCodeAt() > 73
-        || column < 1 || column > 9
-        || coordinate.length !== 2
-      ) return res.json({ error: 'Invalid coordinate'})
+      if (/(^[^A-I][^1-9]$)||(^[A-I][^1-9]$)||(^[^A-I][1-9]$)/.test(coordinate)) return res.json({ error: 'Invalid coordinate'})
 
       const message = { valid: true }
       const conflict = []
