@@ -26,7 +26,7 @@ module.exports = function (app) {
       if (solver.validate(puzzle)) return res.json({ error: solver.validate(puzzle) })
 
       // Check for valid value
-      if (value < 1 || value > 9) return res.json({ error: 'Invalid value' })
+      if (/[^1-9]/.test(value)) return res.json({ error: 'Invalid value' })
 
       // Check for invalid coordinate
       if (
