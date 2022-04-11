@@ -104,7 +104,8 @@ class SudokuSolver {
   solve(puzzleString) {
 
     const self = this
-    let result = 'Invalid puzzle'
+    const notEmpty = {}
+    let result = 'Puzzle cannot be solved'
 
     function backtrack(puzzleString, i) {
 
@@ -125,15 +126,19 @@ class SudokuSolver {
         return
       }
 
+      // Skip prefilled number when backtracking
+      if (notEmpty.hasOwnProperty(i)) return
+
       // Skip prefilled number
       if (/\d/.test(puzzleString[i])) {
+        notEmpty[i] = puzzleString[i]
         backtrack(puzzleString, i + 1)
       }
 
       // Try 1 to 9 for each empty field
       for (let n = 1; n <= 9; n++) {
         // Solution found
-        if (result !== 'Invalid puzzle') return
+        if (result !== 'Puzzle cannot be solved') return
 
         if (isValid(puzzleString, row, column, n)) {
           puzzleString = puzzleString.slice(0, i) + n + puzzleString.slice(i + 1)
