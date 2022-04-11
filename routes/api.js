@@ -59,12 +59,10 @@ module.exports = function (app) {
       if (/[^\d.]/.test(puzzle)) return res.send({ error: 'Invalid characters in puzzle' })
 
       if (puzzle.length !== 81) return res.send({ error: 'Expected puzzle to be 81 characters long' })
-      const solution = solver.solve(puzzle)
 
-      if (solution.length === 81) {
-        res.send({ solution })
-      } else {
-        res.send()
-      }
+      const solution = solver.solve(puzzle)
+      if (solution === 'Puzzle cannot be solved') return res.send({ error: 'Puzzle cannot be solved' })
+
+      if (solution.length === 81) res.send({ solution })
     });
 };
