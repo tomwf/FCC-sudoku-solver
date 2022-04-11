@@ -53,6 +53,8 @@ module.exports = function (app) {
   app.route('/api/solve')
     .post((req, res) => {
       const { puzzle } = req.body
+
+      if (!puzzle) return res.send({ error: 'Required field missing' })
       const solution = solver.solve(puzzle)
 
       if (solution.length === 81) {
