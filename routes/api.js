@@ -20,8 +20,6 @@ module.exports = function (app) {
       const column = +coordinate[1]
       value = +value
 
-      console.log({puzzle, coordinate, row, column, value})
-
       // Check for invalid puzzle string
       if (solver.validate(puzzle)) return res.json({ error: solver.validate(puzzle) })
 
@@ -37,7 +35,6 @@ module.exports = function (app) {
       const invalidCol = solver.checkColPlacement(puzzle, row, column, value)
       const invalidRegion = solver.checkRegionPlacement(puzzle, row, column, value)
 
-      console.log({invalidRow, invalidCol, invalidRegion})
       if (invalidRow) conflict.push(invalidRow)
       if (invalidCol) conflict.push(invalidCol)
       if (invalidRegion) conflict.push(invalidRegion)
