@@ -57,6 +57,8 @@ module.exports = function (app) {
       if (!puzzle) return res.send({ error: 'Required field missing' })
 
       if (/[^\d.]/.test(puzzle)) return res.send({ error: 'Invalid characters in puzzle' })
+
+      if (puzzle.length !== 81) return res.send({ error: 'Expected puzzle to be 81 characters long' })
       const solution = solver.solve(puzzle)
 
       if (solution.length === 81) {
