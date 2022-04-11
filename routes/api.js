@@ -12,6 +12,10 @@ module.exports = function (app) {
         coordinate,
         value
       } = req.body
+
+      // Check for missing field(s)
+      if (!puzzle || !coordinate || !value) return res.json({ error: 'Required field(s) missing' })
+
       const row = coordinate[0].toUpperCase()
       const column = +coordinate[1]
       value = +value
