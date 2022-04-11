@@ -16,7 +16,11 @@ class SudokuSolver {
     const values = []
     const unicodeOfA = 'A'.charCodeAt()
     const rowIndex = (row.charCodeAt() - unicodeOfA) * 9
+    const valueIndex = rowIndex + column - 1
     let result
+
+    // Check for filled field
+    if (puzzleString[valueIndex] == value) return result
 
     // Get all numbers in current row
     for (let i = rowIndex; i < rowIndex + 9; i++) {
@@ -35,7 +39,12 @@ class SudokuSolver {
 
   checkColPlacement(puzzleString, row, column, value) {
     const values = []
+    const unicodeOfA = 'A'.charCodeAt()
+    const valueIndex = (row.charCodeAt() - unicodeOfA) * 9 + column - 1
     let result
+
+    // Check for filled field
+    if (puzzleString[valueIndex] == value) return result
 
     // Get all numbers in current column
     for (let i = column - 1; i < 81; i += 9) {
@@ -55,6 +64,7 @@ class SudokuSolver {
   checkRegionPlacement(puzzleString, row, column, value) {
     const unicodeOfA = 'A'.charCodeAt()
     const unicodeOfRow = row.charCodeAt()
+    const valueIndex = (row.charCodeAt() - unicodeOfA) * 9 + column - 1
     const rowIndex = Math.floor((unicodeOfRow - unicodeOfA) / 3) * 27    // A,B,C = 0 | D,E,F = 27 | G,H,I = 54
     const columnIndex = Math.floor((column - 1) / 3) * 3                 // 1,2,3 = 0 | 4,5,6 = 3  | 7,8,9 = 6
     const regionIndex = rowIndex + columnIndex      // Starting index for each region: 0, 3, 6, 26, 30, 33, 54, 57, 60
@@ -62,6 +72,9 @@ class SudokuSolver {
     const values = []
     let boundary = 0
     let result
+
+    // Check for filled field
+    if (puzzleString[valueIndex] == value) return result
 
     // Get all numbers in current region
     for (let i = regionIndex; i < lastIndex; i++) {
